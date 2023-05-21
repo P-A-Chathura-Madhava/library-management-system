@@ -88,4 +88,26 @@ public class MemberController {
             return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/searchMemberById/{memberId}")
+    public ResponseEntity searchMemberById(@PathVariable int memberId){
+        try {
+            Member result = memberService.searchMemberById(memberId);
+            if (result != null){
+                responseDTO.setCode(VarList.RSP_SUCCESS);
+                responseDTO.setMessage("Success");
+                responseDTO.setContent(result);
+                return new ResponseEntity(responseDTO, HttpStatus.ACCEPTED);
+            }else {
+                responseDTO.setCode(VarList.RSP_NO_DATA_FOUND);
+                responseDTO.setMessage("Member not found");
+                responseDTO.setContent(null);
+                return new ResponseEntity(responseDTO, HttpStatus.NO_CONTENT);
+            }
+        }catch (Exception ex){
+            responseDTO.setCode(VarList.RSP_ERROR);
+            responseDTO.setMessage("Error");
+            responseDTO.setContent(null);
+            return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

@@ -8,4 +8,6 @@ public interface MemberService {
     String saveMember(Member member);
     String updateMember(Member member);
     List<Member> getAllMembers();
+    Member searchMemberById(int id);
+    String deleteMemberById(int id);
 }

@@ -36,4 +36,24 @@ public class MemberServiceImpl implements MemberService {
     public List<Member> getAllMembers() {
         return memberRepo.findAll();
     }
+
+    @Override
+    public Member searchMemberById(int id) {
+        if (memberRepo.existsById(id)){
+            Member member = memberRepo.findById(id).orElse(null);
+            return member;
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    public String deleteMemberById(int id) {
+        if (memberRepo.existsById(id)){
+            memberRepo.deleteById(id);
+            return VarList.RSP_SUCCESS;
+        }else {
+            return VarList.RSP_NO_DATA_FOUND;
+        }
+    }
 }
