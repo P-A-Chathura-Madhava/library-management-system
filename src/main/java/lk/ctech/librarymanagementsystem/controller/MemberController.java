@@ -44,4 +44,31 @@ public class MemberController {
             return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PutMapping("/updateMember")
+    public ResponseEntity updateMember(@RequestBody Member member){
+        try {
+            String result = memberService.updateMember(member);
+            if (result.equals("00")){
+                responseDTO.setCode(VarList.RSP_SUCCESS);
+                responseDTO.setMessage("Success");
+                responseDTO.setContent(member);
+                return new ResponseEntity(responseDTO, HttpStatus.ACCEPTED);
+            } else if (result.equals("01")) {
+                responseDTO.setCode(VarList.RSP_NO_DATA_FOUND);
+                responseDTO.setMessage("Not a registered member");
+                responseDTO.setContent(member);
+                return new ResponseEntity(responseDTO, HttpStatus.NO_CONTENT);
+            }else {
+                responseDTO.setCode(VarList.RSP_ERROR);
+                responseDTO.setMessage("Error");
+                responseDTO.setContent(null);
+                return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception ex){
+            responseDTO.setCode(VarList.RSP_ERROR);
+            responseDTO.setMessage("Error");
+            responseDTO.setContent(null);
+            return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

@@ -4,4 +4,5 @@ import lk.ctech.librarymanagementsystem.model.Member;
 
 public interface MemberService {
     String saveMember(Member member);
+    String updateMember(Member member);
 }

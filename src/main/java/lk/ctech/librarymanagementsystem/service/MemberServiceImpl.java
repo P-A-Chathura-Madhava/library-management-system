@@ -20,4 +20,13 @@ public class MemberServiceImpl implements MemberService {
             return VarList.RSP_SUCCESS;
         }
     }
+    @Override
+    public String updateMember(Member member) {
+        if (memberRepo.existsById(member.getMemberId())){
+            memberRepo.save(member);
+            return VarList.RSP_SUCCESS;
+        }else {
+            return VarList.RSP_NO_DATA_FOUND;
+        }
+    }
 }
