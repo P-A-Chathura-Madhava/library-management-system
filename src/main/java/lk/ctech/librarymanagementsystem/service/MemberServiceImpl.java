@@ -6,6 +6,8 @@ import lk.ctech.librarymanagementsystem.util.VarList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MemberServiceImpl implements MemberService {
     @Autowired
@@ -28,5 +30,10 @@ public class MemberServiceImpl implements MemberService {
         }else {
             return VarList.RSP_NO_DATA_FOUND;
         }
+    }
+
+    @Override
+    public List<Member> getAllMembers() {
+        return memberRepo.findAll();
     }
 }
