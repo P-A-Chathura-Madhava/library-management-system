@@ -60,4 +60,36 @@ public class IssueItemController {
             return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
         }
     }
+    @PostMapping("/returnItem")
+    public ResponseEntity returnItem(@RequestBody IssueItem issueItem){
+        try {
+            Book book = bookService.searchBookById(issueItem.getBookId());
+            int qty = book.getQty();
+            int newQty = ++qty;
+            book.setQty(newQty);
+            String result = issueItemService.removeIssueItemById(issueItem.getIssueId());
+            if (result.equals("00")){
+                bookService.updateBook(book);
+                responseDTO.setCode(VarList.RSP_SUCCESS);
+                responseDTO.setMessage("Success");
+                responseDTO.setContent(null);
+                return new ResponseEntity(responseDTO, HttpStatus.ACCEPTED);
+            } else if (result.equals("01")) {
+                responseDTO.setCode(VarList.RSP_NO_DATA_FOUND);
+                responseDTO.setMessage("Issue item not found");
+                responseDTO.setContent(null);
+                return new ResponseEntity(responseDTO, HttpStatus.NO_CONTENT);
+            }else {
+                responseDTO.setCode(VarList.RSP_ERROR);
+                responseDTO.setMessage("Error");
+                responseDTO.setContent(null);
+                return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception ex){
+            responseDTO.setCode(VarList.RSP_ERROR);
+            responseDTO.setMessage("Error");
+            responseDTO.setContent(null);
+            return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

@@ -4,4 +4,5 @@ import lk.ctech.librarymanagementsystem.model.IssueItem;
 
 public interface IssueItemService {
     String addIssueItem(IssueItem issueItem);
+    String removeIssueItemById(int id);
 }

@@ -21,5 +21,13 @@ public class IssueItemServiceImpl implements IssueItemService {
         }
     }
 
-
+    @Override
+    public String removeIssueItemById(int id) {
+        if (issueItemRepo.existsById(id)){
+            issueItemRepo.deleteById(id);
+            return VarList.RSP_SUCCESS;
+        }else {
+            return VarList.RSP_NO_DATA_FOUND;
+        }
+    }
 }
