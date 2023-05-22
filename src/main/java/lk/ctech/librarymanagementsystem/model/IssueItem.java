@@ -7,13 +7,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Builder
-@Document(collection = "Book")
-public class Book {
+@Document(collection = "IssueItem")
+public class IssueItem {
     @Id
+    private int issueId;
+    private int memberId;
     private int bookId;
-    private String title;
-    private String author;
-    private double price;
-    private String year;
-    private int qty;
+    private String date;
 }
