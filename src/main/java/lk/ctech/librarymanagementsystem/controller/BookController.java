@@ -45,4 +45,31 @@ public class BookController {
             return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PutMapping("/updateBook")
+    public ResponseEntity updateBook(@RequestBody Book book){
+        try {
+            String result = bookService.updateBook(book);
+            if (result.equals("00")){
+                responseDTO.setCode(VarList.RSP_SUCCESS);
+                responseDTO.setMessage("Success");
+                responseDTO.setContent(book);
+                return new ResponseEntity(responseDTO, HttpStatus.ACCEPTED);
+            } else if (result.equals("01")) {
+                responseDTO.setCode(VarList.RSP_NO_DATA_FOUND);
+                responseDTO.setMessage("Book not found");
+                responseDTO.setContent(book);
+                return new ResponseEntity(responseDTO, HttpStatus.NO_CONTENT);
+            }else {
+                responseDTO.setCode(VarList.RSP_ERROR);
+                responseDTO.setMessage("Error");
+                responseDTO.setContent(null);
+                return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception ex){
+            responseDTO.setCode(VarList.RSP_ERROR);
+            responseDTO.setMessage("Error");
+            responseDTO.setContent(null);
+            return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

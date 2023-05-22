@@ -20,4 +20,14 @@ public class BookServiceImpl implements BookService {
             return VarList.RSP_SUCCESS;
         }
     }
+
+    @Override
+    public String updateBook(Book book) {
+        if (bookRepo.existsById(book.getBookId())){
+            bookRepo.save(book);
+            return VarList.RSP_SUCCESS;
+        }else {
+            return VarList.RSP_NO_DATA_FOUND;
+        }
+    }
 }
