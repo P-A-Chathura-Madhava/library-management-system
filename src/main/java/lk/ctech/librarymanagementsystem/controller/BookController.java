@@ -111,4 +111,26 @@ public class BookController {
             return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @DeleteMapping("/deleteBookById/{bookId}")
+    public ResponseEntity deleteBookById(@PathVariable int bookId){
+        try {
+            String result = bookService.deleteBookById(bookId);
+            if (result.equals("00")){
+                responseDTO.setCode(VarList.RSP_SUCCESS);
+                responseDTO.setMessage("Success");
+                responseDTO.setContent(null);
+                return new ResponseEntity(responseDTO, HttpStatus.ACCEPTED);
+            }else {
+                responseDTO.setCode(VarList.RSP_NO_DATA_FOUND);
+                responseDTO.setMessage("Book not found");
+                responseDTO.setContent(null);
+                return new ResponseEntity(responseDTO, HttpStatus.NO_CONTENT);
+            }
+        }catch (Exception ex){
+            responseDTO.setCode(VarList.RSP_ERROR);
+            responseDTO.setMessage("Error");
+            responseDTO.setContent(null);
+            return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

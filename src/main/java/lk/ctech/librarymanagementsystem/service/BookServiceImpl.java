@@ -47,4 +47,14 @@ public class BookServiceImpl implements BookService {
             return null;
         }
     }
+
+    @Override
+    public String deleteBookById(int id) {
+        if (bookRepo.existsById(id)){
+            bookRepo.deleteById(id);
+            return VarList.RSP_SUCCESS;
+        }else {
+            return VarList.RSP_NO_DATA_FOUND;
+        }
+    }
 }
