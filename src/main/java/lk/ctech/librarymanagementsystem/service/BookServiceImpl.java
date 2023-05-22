@@ -6,6 +6,8 @@ import lk.ctech.librarymanagementsystem.util.VarList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BookServiceImpl implements BookService {
     @Autowired
@@ -28,6 +30,21 @@ public class BookServiceImpl implements BookService {
             return VarList.RSP_SUCCESS;
         }else {
             return VarList.RSP_NO_DATA_FOUND;
+        }
+    }
+
+    @Override
+    public List<Book> getAllBooks() {
+        return bookRepo.findAll();
+    }
+
+    @Override
+    public Book searchBookById(int id) {
+        if (bookRepo.existsById(id)){
+            Book book = bookRepo.findById(id).orElse(null);
+            return book;
+        }else {
+            return null;
         }
     }
 }
